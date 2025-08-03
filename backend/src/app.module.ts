@@ -6,6 +6,8 @@ import { UsersModule } from './modules/users/users.module';
 import { CandidatesModule } from './modules/candidates/candidates.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from './config/database.config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { throttlerConfig } from './config/throttler.config';
 
 @Module({
   imports: [
@@ -13,9 +15,16 @@ import { getDatabaseConfig } from './config/database.config';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(getDatabaseConfig()),
+    ThrottlerModule.forRootAsync(throttlerConfig),
     CandidatesModule,
     UsersModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService, 
+    {
+      provide: 'APP_GUARD',
+      useClass: ThrottlerGuard,
+    }
+  ],
 })
 export class AppModule {}
