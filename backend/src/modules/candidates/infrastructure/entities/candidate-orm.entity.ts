@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { BaseEntity } from "./base.entity";
 import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
 import { Expose } from "class-transformer";
-
+import { BaseEntity } from "../../../../shared/infrastructure/entities/base.entity";
 @Entity('candidates')
 export class CandidateOrmEntity extends BaseEntity {
     @Column( { name: 'user_id', type: 'int' })

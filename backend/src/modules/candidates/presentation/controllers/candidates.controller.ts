@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Inject } from '@nestjs/common';
 import { CreateCandidateDto } from '../../application/dto/create-candidate.dto';
 import { UpdateCandidateDto } from '../../application/dto/update-candidate.dto';
 import { CreateCandidateUseCase } from '../../application/use-cases/create-candidate.use-case';
@@ -21,6 +21,7 @@ export class CandidatesController {
     private readonly findCandidateByIdUseCase: FindCandidateByIdUseCase,
     private readonly updateCandidateUseCase: UpdateCandidateUseCase,
     private readonly deleteCandidateUseCase: DeleteCandidateUseCase,
+    @Inject('ICandidateFactory') private readonly candidateFactory: CandidateFactory,
   ) {}
 
   @Post()
@@ -30,7 +31,7 @@ export class CandidatesController {
   })
   async create(@Body() createCandidateDto: CreateCandidateDto): Promise<CandidateDto> {
     const createdCandidate = await this.createCandidateUseCase.execute(createCandidateDto);
-    return CandidateFactory.toCandidateDto(createdCandidate);
+    return this.candidateFactory.toDto(createdCandidate);
   }
 
   @Get()
@@ -40,7 +41,7 @@ export class CandidatesController {
   })
   async findAll(): Promise<CandidateDto[]> {
     const candidates = await this.findAllCandidatesUseCase.execute();
-    return candidates.map(c => CandidateFactory.toCandidateDto(c));
+    return candidates.map(c => this.candidateFactory.toDto(c));
   }
 
   @Get(':id')
@@ -53,7 +54,7 @@ export class CandidatesController {
   })
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<CandidateDto> {
     const candidate = await this.findCandidateByIdUseCase.execute(id);
-    return CandidateFactory.toCandidateDto(candidate);
+    return this.candidateFactory.toDto(candidate);
   }
 
   @Patch(':id')
@@ -66,7 +67,7 @@ export class CandidatesController {
   })
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateCandidateDto: UpdateCandidateDto): Promise<CandidateDto> {
     const updatedCandidate = await this.updateCandidateUseCase.execute(id, updateCandidateDto);
-    return CandidateFactory.toCandidateDto(updatedCandidate);
+    return this.candidateFactory.toDto(updatedCandidate);
   }
 
   @ApiOkResponse({
