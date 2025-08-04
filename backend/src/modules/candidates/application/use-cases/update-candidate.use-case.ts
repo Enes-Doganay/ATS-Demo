@@ -7,7 +7,10 @@ import { CandidateNotFoundError } from "../errors/candidate-not-found.error";
 
 @Injectable()
 export class UpdateCandidateUseCase {
-    constructor(@Inject('ICandidateRepository') private readonly candidateRepository: ICandidateRepository) {}
+    constructor(
+        @Inject('ICandidateRepository') private readonly candidateRepository: ICandidateRepository,
+        @Inject('ICandidateFactory') private readonly candidateFactory: CandidateFactory
+    ) {}
 
     async execute(id: number, dto: UpdateCandidateDto): Promise<Candidate> {
         const existingCandidate = await this.candidateRepository.findById(id);
@@ -16,7 +19,7 @@ export class UpdateCandidateUseCase {
             throw new CandidateNotFoundError(id);
         }
 
-        const updatedCandidate = CandidateFactory.updateFromDto(existingCandidate, dto);
+        const updatedCandidate = this.candidateFactory.updateFromDto(existingCandidate, dto);
 
         return await this.candidateRepository.update(updatedCandidate);
     }

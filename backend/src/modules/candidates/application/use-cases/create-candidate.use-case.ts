@@ -5,10 +5,13 @@ import { CandidateFactory } from "../../domain/factories/candidate.factory";
 
 @Injectable()
 export class CreateCandidateUseCase {
-    constructor(@Inject('ICandidateRepository') private readonly candidateRepository: ICandidateRepository) {}
+    constructor(
+        @Inject('ICandidateRepository') private readonly candidateRepository: ICandidateRepository,
+        @Inject('ICandidateFactory') private readonly candidateFactory: CandidateFactory
+    ) {}
 
     async execute(dto: CreateCandidateDto) {
-        const candidate = CandidateFactory.createFromDto(dto);
+        const candidate = this.candidateFactory.createFromDto(dto);
         return await this.candidateRepository.create(candidate);
     }
 }
