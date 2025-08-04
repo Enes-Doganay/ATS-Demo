@@ -6,6 +6,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { config } from 'process';
 import { swaggerConfig } from './config/swagger.config';
 import { ConfigService } from '@nestjs/config';
+import { DomainExceptionFilter } from './common/filters/domain-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,6 +31,8 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
     app.use('/api-json', (req, res) => res.json(document));
   }
+
+  app.useGlobalFilters(new DomainExceptionFilter());
 
   await app.listen(process.env.PORT ?? 3000);
 }
