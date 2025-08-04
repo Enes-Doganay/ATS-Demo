@@ -1,3 +1,4 @@
+import { CandidateDto } from "../../application/dto/candidate.dto";
 import { CreateCandidateDto } from "../../application/dto/create-candidate.dto";
 import { UpdateCandidateDto } from "../../application/dto/update-candidate.dto";
 import { CandidateOrmEntity } from "../../infrastructure/entities/candidate-orm.entity";
@@ -44,6 +45,18 @@ export class CandidateFactory {
             existing.createdAt,
             new Date(),
         );
+    }
+
+    static toCandidateDto(candidate: Candidate): CandidateDto {
+        return{
+            id: candidate.id,
+            user_id: candidate.userId,
+            first_name: candidate.firstName,
+            last_name: candidate.lastName,
+            email: candidate.email,
+            phone: candidate.phone,
+            resume_url: candidate.resumeUrl,
+        };
     }
 
 }
