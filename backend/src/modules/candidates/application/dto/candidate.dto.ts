@@ -1,7 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsInt, IsOptional, IsString } from "class-validator";
 
-export class CreateCandidateDto {
+export class CandidateDto {
+    @ApiProperty({ description: 'The ID of the candidate', example: 1 })
+    @IsInt()
+    id: number;
+
     @ApiProperty({ description: 'The ID of the user', example: 1 })
     @IsInt()
     user_id: number;

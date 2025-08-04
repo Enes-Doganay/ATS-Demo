@@ -6,7 +6,13 @@ import { FindAllCandidatesUseCase } from '../../application/use-cases/find-all-c
 import { FindCandidateByIdUseCase } from '../../application/use-cases/find-candidate-by-id.use-case';
 import { UpdateCandidateUseCase } from '../../application/use-cases/update-candidate.use-case';
 import { DeleteCandidateUseCase } from '../../application/use-cases/delete-candidate.use-case';
+import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator';
+import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { Candidate } from '../../domain/entities/candidate.entity';
+import { CandidateDto } from '../../application/dto/candidate.dto';
+import { CandidateFactory } from '../../domain/factories/candidate.factory';
 
+@ApiTags('Candidates')
 @Controller('candidates')
 export class CandidatesController {
   constructor(
@@ -18,27 +24,59 @@ export class CandidatesController {
   ) {}
 
   @Post()
-  create(@Body() createCandidateDto: CreateCandidateDto) {
-    return this.createCandidateUseCase.execute(createCandidateDto);
+  @ApiCreatedResponse({
+    description: 'Candidate created successfully',
+    type: CandidateDto,
+  })
+  async create(@Body() createCandidateDto: CreateCandidateDto): Promise<CandidateDto> {
+    const createdCandidate = await this.createCandidateUseCase.execute(createCandidateDto);
+    return CandidateFactory.toCandidateDto(createdCandidate);
   }
 
   @Get()
-  findAll() {
-    return this.findAllCandidatesUseCase.execute();
+  @ApiOkResponse({
+    description: 'All candidates retrieved successfully',
+    type: CandidateDto
+  })
+  async findAll(): Promise<CandidateDto[]> {
+    const candidates = await this.findAllCandidatesUseCase.execute();
+    return candidates.map(c => CandidateFactory.toCandidateDto(c));
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.findCandidateByIdUseCase.execute(id);
+  @ApiOkResponse({
+    description: 'Candidate found successfully',
+    type: CandidateDto
+  })
+  @ApiNotFoundResponse({
+    description: 'Candidate not found',
+  })
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<CandidateDto> {
+    const candidate = await this.findCandidateByIdUseCase.execute(id);
+    return CandidateFactory.toCandidateDto(candidate);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateCandidateDto: UpdateCandidateDto) {
-    return this.updateCandidateUseCase.execute(id, updateCandidateDto);
+  @ApiOkResponse({
+    description: 'Candidate updated successfully',
+    type: CandidateDto
+  })
+  @ApiNotFoundResponse({
+    description: 'Candidate not found',
+  })
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateCandidateDto: UpdateCandidateDto): Promise<CandidateDto> {
+    const updatedCandidate = await this.updateCandidateUseCase.execute(id, updateCandidateDto);
+    return CandidateFactory.toCandidateDto(updatedCandidate);
   }
 
+  @ApiOkResponse({
+    description: 'Candidate deleted successfully',
+  })
+  @ApiNotFoundResponse({
+    description: 'Candidate not found',
+  })
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     return this.deleteCandidateUseCase.execute(id);
   }
 }
