@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Candidate } from '../../domain/entities/candidate.entity';
 import { CandidateDto } from '../../application/dto/candidate.dto';
-import { CandidateFactory } from '../../domain/factories/candidate.factory';
+import { CandidateFactory } from '../../application/factories/candidate.factory';
 
 @ApiTags('Candidates')
 @Controller('candidates')

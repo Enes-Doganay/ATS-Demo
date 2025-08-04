@@ -1,9 +1,9 @@
 import { BaseFactory } from "src/shared/domain/factories/base.factory";
-import { CandidateDto } from "../../application/dto/candidate.dto";
-import { CreateCandidateDto } from "../../application/dto/create-candidate.dto";
-import { UpdateCandidateDto } from "../../application/dto/update-candidate.dto";
+import { CandidateDto } from "../dto/candidate.dto";
+import { CreateCandidateDto } from "../dto/create-candidate.dto";
+import { UpdateCandidateDto } from "../dto/update-candidate.dto";
 import { CandidateOrmEntity } from "../../infrastructure/entities/candidate-orm.entity";
-import { Candidate } from "../entities/candidate.entity";
+import { Candidate } from "../../domain/entities/candidate.entity";
 
 export class CandidateFactory extends BaseFactory<Candidate, CandidateOrmEntity, CreateCandidateDto, UpdateCandidateDto, CandidateDto> {
     createFromDto(dto: CreateCandidateDto): Candidate {

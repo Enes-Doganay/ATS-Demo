@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import { Candidate } from "../../domain/entities/candidate.entity";
 import { ICandidateRepository } from "../../domain/interfaces/candidate-repository.interface";
 import { UpdateCandidateDto } from "../dto/update-candidate.dto";
-import { CandidateFactory } from "../../domain/factories/candidate.factory";
+import { CandidateFactory } from "../factories/candidate.factory";
 import { CandidateNotFoundError } from "../errors/candidate-not-found.error";
 
 @Injectable()

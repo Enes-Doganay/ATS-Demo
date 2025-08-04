@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { BaseRepository } from "../../../../shared/infrastructure/repositories/base.repository";
 import { Candidate } from "../../domain/entities/candidate.entity";
 import { ICandidateRepository } from "../../domain/interfaces/candidate-repository.interface";
-import { CandidateFactory } from "../../domain/factories/candidate.factory";
+import { CandidateFactory } from "../../application/factories/candidate.factory";
 import { CandidateOrmEntity } from "../entities/candidate-orm.entity";
 
 @Injectable()

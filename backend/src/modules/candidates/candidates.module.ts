@@ -8,7 +8,7 @@ import { FindAllCandidatesUseCase } from './application/use-cases/find-all-candi
 import { FindCandidateByIdUseCase } from './application/use-cases/find-candidate-by-id.use-case';
 import { UpdateCandidateUseCase } from './application/use-cases/update-candidate.use-case';
 import { DeleteCandidateUseCase } from './application/use-cases/delete-candidate.use-case';
-import { CandidateFactory } from './domain/factories/candidate.factory';
+import { CandidateFactory } from './application/factories/candidate.factory';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CandidateOrmEntity])],
