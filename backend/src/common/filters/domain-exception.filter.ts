@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from "@nestjs/common";
-import { CandidateNotFoundError } from "src/modules/candidates/application/errors/candidate-not-found.error";
 import { Response } from "express";
+import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
 
 @Catch()
 export class DomainExceptionFilter implements ExceptionFilter{
@@ -8,7 +8,7 @@ export class DomainExceptionFilter implements ExceptionFilter{
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
 
-        if (exception instanceof CandidateNotFoundError) {
+        if (exception instanceof EntityNotFoundError) {
             return response.status(404).json({
                 statusCode: 404,
                 message: exception.message

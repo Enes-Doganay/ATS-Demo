@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { ICandidateRepository } from "../../domain/interfaces/candidate-repository.interface";
-import { CandidateNotFoundError } from "../errors/candidate-not-found.error";
+import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
 
 @Injectable()
 export class DeleteCandidateUseCase {
@@ -10,7 +10,7 @@ export class DeleteCandidateUseCase {
     const candidate = await this.candidateRepository.findById(id);
 
     if (!candidate) {
-      throw new CandidateNotFoundError(id);
+      throw new EntityNotFoundError('Candidate', id);
     }
 
     return await this.candidateRepository.delete(id);
