@@ -4,14 +4,19 @@ import { UserOrmEntity } from "../../infrastructure/entities/user-orm-entity";
 import { CreateUserDto } from "../dtos/create-user.dto";
 import { UpdateUserDto } from "../dtos/update-user.dto";
 import { UserDto } from "../dtos/user.dto";
+import * as bcrypt from 'bcrypt';
 
 export class UserFactory extends BaseFactory<User, UserOrmEntity, CreateUserDto, UpdateUserDto, UserDto> {
-    createFromDto(dto: CreateUserDto): User {
+    private readonly saltRounds = 10;
+
+    async createFromDto(dto: CreateUserDto): Promise<User> {
+        const hashedPassword = await bcrypt.hash(dto.password, this.saltRounds);
+
         return new User(
             0,
             dto.name,
             dto.email,
-            dto.password,
+            hashedPassword,
             dto.role,
             this.getCurrentTimeStamp(),
             this.getCurrentTimeStamp(),
@@ -44,12 +49,18 @@ export class UserFactory extends BaseFactory<User, UserOrmEntity, CreateUserDto,
         return entity;
     }
 
-    updateFromDto(existing: User, dto: UpdateUserDto): User {
+    async updateFromDto(existing: User, dto: UpdateUserDto): Promise<User> {
+        let hashedPassword = existing.password;
+
+        if (dto.password) {
+            hashedPassword = await bcrypt.hash(dto.password, this.saltRounds);
+        }
+
         return new User(
             existing.id,
             dto.name || existing.name,
             dto.email || existing.email,
-            dto.password || existing.password,
+            hashedPassword,
             dto.role || existing.role,
             existing.createdAt,
             this.getCurrentTimeStamp(),
@@ -60,7 +71,6 @@ export class UserFactory extends BaseFactory<User, UserOrmEntity, CreateUserDto,
             id: domain.id,
             name: domain.name,
             email: domain.email,
-            password: domain.password,
             role: domain.role,
         };
     }

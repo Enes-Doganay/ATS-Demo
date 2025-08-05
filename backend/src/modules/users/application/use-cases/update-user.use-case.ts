@@ -18,7 +18,7 @@ export class UpdateUserUseCase {
         throw new EntityNotFoundError('User', id);
     }
 
-    const updatedUser = this.userFactory.updateFromDto(user, dto);
+    const updatedUser = await this.userFactory.updateFromDto(user, dto);
     return this.userRepository.update(updatedUser);
   }
 }

@@ -11,7 +11,7 @@ export class CreateUserUseCase {
     ) {}
 
     async execute(createUserDto: CreateUserDto): Promise<User> {
-        const user = this.userFactory.createFromDto(createUserDto);
+        const user = await this.userFactory.createFromDto(createUserDto);
         return await this.userRepository.create(user);
     }
 }
