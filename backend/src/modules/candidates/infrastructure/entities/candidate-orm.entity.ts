@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
 import { Expose } from "class-transformer";
 import { BaseEntity } from "../../../../shared/infrastructure/entities/base.entity";
+import { UserOrmEntity } from "src/modules/users/infrastructure/entities/user-orm-entity";
 @Entity('candidates')
 export class CandidateOrmEntity extends BaseEntity {
     @Column( { name: 'user_id', type: 'int' })
@@ -35,11 +36,7 @@ export class CandidateOrmEntity extends BaseEntity {
     @Expose()
     resumeUrl?: string;
 
-  // Relations
-//   @ManyToOne(() => User, (user) => user.candidates)
-//   @JoinColumn({ name: 'user_id' })
-//   user: User;
-
-//   @OneToMany(() => Application, (application) => application.candidate)
-//   applications: Application[];
+    @ManyToOne(() => UserOrmEntity, (user) => user.candidates)
+    @JoinColumn({ name: 'user_id' })
+    user: UserOrmEntity;
 }

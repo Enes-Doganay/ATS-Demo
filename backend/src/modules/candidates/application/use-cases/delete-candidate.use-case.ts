@@ -6,7 +6,7 @@ import { EntityNotFoundError } from "src/shared/application/errors/entity-not-fo
 export class DeleteCandidateUseCase {
   constructor(@Inject('ICandidateRepository') private readonly candidateRepository: ICandidateRepository) {}
 
-  async execute(id: number) {
+  async execute(id: number): Promise<void> {
     const candidate = await this.candidateRepository.findById(id);
 
     if (!candidate) {

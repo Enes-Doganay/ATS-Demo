@@ -10,10 +10,11 @@ import { UserFactory } from "../../application/factories/user.factory";
 
 @Injectable()
 export class UserRepository extends BaseRepository<User, UserOrmEntity> implements IUserRepository {
+    private readonly userFactory = new UserFactory();
+
     constructor(
         @InjectRepository(UserOrmEntity)
         repository: Repository<UserOrmEntity>,
-        @Inject('IUserFactory') private readonly userFactory: UserFactory
     ) {
         super(repository);
     }
