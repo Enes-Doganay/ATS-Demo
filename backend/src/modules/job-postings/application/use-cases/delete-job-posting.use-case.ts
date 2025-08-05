@@ -1,10 +1,10 @@
 import { Inject } from "@nestjs/common";
-import { JobPostingRepository } from "../../infrastructure/repositories/job-posting.repository";
 import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { IJobPostingRepository } from "../../domain/interfaces/job-posting-repository.interface";
 
 export class DeleteJobPostingUseCase {
   constructor(
-    @Inject('IJobPostingRepository') private readonly jobPostingRepository: JobPostingRepository,
+    @Inject('IJobPostingRepository') private readonly jobPostingRepository: IJobPostingRepository,
   ) {}
 
   async execute(id: number): Promise<void> {

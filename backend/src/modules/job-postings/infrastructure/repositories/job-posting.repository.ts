@@ -4,8 +4,8 @@ import { JobPostingOrmEntity } from "../entities/job-posting-orm.entity";
 import { IJobPostingRepository } from "../../domain/interfaces/job-posting-repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Inject, Injectable } from "@nestjs/common";
-import { JobPostingFactory } from "../../domain/factories/job-posting.factory";
+import { Injectable } from "@nestjs/common";
+import { JobPostingFactory } from "../../application/factories/job-posting.factory";
 
 @Injectable()
 export class JobPostingRepository extends BaseRepository<JobPosting, JobPostingOrmEntity> implements IJobPostingRepository {

@@ -1,10 +1,9 @@
 import { BaseFactory } from "src/shared/domain/factories/base.factory";
-import { JobPosting } from "../entities/job-posting.entity";
+import { JobPosting } from "../../domain/entities/job-posting.entity";
 import { JobPostingOrmEntity } from "../../infrastructure/entities/job-posting-orm.entity";
-import { CreateJobPostingDto } from "../../application/dto/create-job-posting.dto";
-import { UpdateJobPostingDto } from "../../application/dto/update-job-posting.dto";
-import { JobPostingDto } from "../../application/dto/job-posting.dto";
-import { IBaseFactory } from "src/shared/domain/interfaces/base-factory.interface";
+import { CreateJobPostingDto } from "../dto/create-job-posting.dto";
+import { UpdateJobPostingDto } from "../dto/update-job-posting.dto";
+import { JobPostingDto } from "../dto/job-posting.dto";
 
 export class JobPostingFactory extends BaseFactory<JobPosting, JobPostingOrmEntity, CreateJobPostingDto, UpdateJobPostingDto, JobPostingDto> {
     createFromDto(dto: CreateJobPostingDto): JobPosting {

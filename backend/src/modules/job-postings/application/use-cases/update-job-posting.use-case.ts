@@ -1,15 +1,15 @@
 import { Inject } from "@nestjs/common";
-import { JobPostingRepository } from "../../infrastructure/repositories/job-posting.repository";
-import { JobPostingFactory } from "../../domain/factories/job-posting.factory";
 import { UpdateJobPostingDto } from "../dto/update-job-posting.dto";
 import { JobPosting } from "../../domain/entities/job-posting.entity";
 import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
 import { IUserRepository } from "src/modules/users/domain/interfaces/user-repository.interface";
+import { IJobPostingFactory } from "../../domain/interfaces/job-posting-factory.interface";
+import { IJobPostingRepository } from "../../domain/interfaces/job-posting-repository.interface";
 
 export class UpdateJobPostingUseCase {
     constructor(
-        @Inject('IJobPostingRepository') private readonly jobPostingRepository: JobPostingRepository,
-        @Inject('IJobPostingFactory') private readonly jobPostingFactory: JobPostingFactory,
+        @Inject('IJobPostingRepository') private readonly jobPostingRepository: IJobPostingRepository,
+        @Inject('IJobPostingFactory') private readonly jobPostingFactory: IJobPostingFactory,
         @Inject('IUserRepository') private readonly userRepository: IUserRepository,
     ){}
 
@@ -28,7 +28,7 @@ export class UpdateJobPostingUseCase {
             }
         }
 
-        const updatedJobPosting = this.jobPostingFactory.updateFromDto(jobPosting, dto);
+        const updatedJobPosting = await this.jobPostingFactory.updateFromDto(jobPosting, dto);
         return await this.jobPostingRepository.update(updatedJobPosting);
     }
 }

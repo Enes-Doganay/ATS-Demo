@@ -8,9 +8,8 @@ import { UpdateCandidateUseCase } from '../../application/use-cases/update-candi
 import { DeleteCandidateUseCase } from '../../application/use-cases/delete-candidate.use-case';
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Candidate } from '../../domain/entities/candidate.entity';
 import { CandidateDto } from '../../application/dto/candidate.dto';
-import { CandidateFactory } from '../../application/factories/candidate.factory';
+import { ICandidateFactory } from '../../domain/interfaces/candidate-factory.interface';
 
 @ApiTags('Candidates')
 @Controller('candidates')
@@ -21,7 +20,7 @@ export class CandidatesController {
     private readonly findCandidateByIdUseCase: FindCandidateByIdUseCase,
     private readonly updateCandidateUseCase: UpdateCandidateUseCase,
     private readonly deleteCandidateUseCase: DeleteCandidateUseCase,
-    @Inject('ICandidateFactory') private readonly candidateFactory: CandidateFactory,
+    @Inject('ICandidateFactory') private readonly candidateFactory: ICandidateFactory,
   ) {}
 
   @Post()

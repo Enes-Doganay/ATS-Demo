@@ -4,11 +4,11 @@ import { FindUserByIdUseCase } from '../../application/use-cases/find-user-by-id
 import { CreateUserUseCase } from '../../application/use-cases/create-user.use-case';
 import { DeleteUserUseCase } from '../../application/use-cases/delete-user.use-case';
 import { UpdateUserUseCase } from '../../application/use-cases/update-user.use-case';
-import { UserFactory } from '../../application/factories/user.factory';
 import { UserDto } from '../../application/dtos/user.dto';
 import { ApiNotFoundResponse, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from '../../application/dtos/create-user.dto';
 import { UpdateUserDto } from '../../application/dtos/update-user.dto';
+import { IUserFactory } from '../../domain/interfaces/user-factory.interface';
 
 @Controller('users')
 export class UsersController {
@@ -18,7 +18,7 @@ export class UsersController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly deleteUserUseCase: DeleteUserUseCase,
-    @Inject('IUserFactory') private readonly userFactory: UserFactory,
+    @Inject('IUserFactory') private readonly userFactory: IUserFactory,
   ) {}
 
   @Get()

@@ -5,10 +5,10 @@ import { CreateJobPostingUseCase } from '../../application/use-cases/create-job-
 import { UpdateJobPostingUseCase } from '../../application/use-cases/update-job-posting.use-case';
 import { FindJobPostingByIdUseCase } from '../../application/use-cases/find-job-posting-by-id.use-case';
 import { DeleteJobPostingUseCase } from '../../application/use-cases/delete-job-posting.use-case';
-import { JobPostingFactory } from '../../domain/factories/job-posting.factory';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { JobPostingDto } from '../../application/dto/job-posting.dto';
 import { FindAllJobPostingUseCase } from '../../application/use-cases/find-all-job-posting.use-case';
+import { IJobPostingFactory } from '../../domain/interfaces/job-posting-factory.interface';
 
 @Controller('job-postings')
 export class JobPostingsController {
@@ -18,7 +18,7 @@ export class JobPostingsController {
     private readonly findJobPostingByIdUseCase: FindJobPostingByIdUseCase,
     private readonly deleteJobPostingUseCase: DeleteJobPostingUseCase,
     private readonly findAllJobPostingsUseCase: FindAllJobPostingUseCase,
-    @Inject('IJobPostingFactory') private readonly jobPostingFactory: JobPostingFactory,
+    @Inject('IJobPostingFactory') private readonly jobPostingFactory: IJobPostingFactory,
   ) {}
 
   @Post()
