@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from './config/database.config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { throttlerConfig } from './config/throttler.config';
+import { JobPostingsModule } from './modules/job-postings/job-postings.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { throttlerConfig } from './config/throttler.config';
     TypeOrmModule.forRoot(getDatabaseConfig()),
     ThrottlerModule.forRootAsync(throttlerConfig),
     CandidatesModule,
-    UsersModule],
+    UsersModule,
+    JobPostingsModule],
   controllers: [AppController],
   providers: [
     AppService, 

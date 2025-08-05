@@ -13,6 +13,6 @@ export class DeleteCandidateUseCase {
       throw new EntityNotFoundError('Candidate', id);
     }
 
-    return await this.candidateRepository.delete(id);
+    await this.candidateRepository.delete(id);
   }
 }

@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { UserRole } from "../../domain/enums/user-role.enum";
 import { CandidateOrmEntity } from "src/modules/candidates/infrastructure/entities/candidate-orm.entity";
+import { JobPostingOrmEntity } from "src/modules/job-postings/infrastructure/entities/job-posting-orm.entity";
 
 @Entity('users')
 export class UserOrmEntity {
@@ -31,4 +32,7 @@ export class UserOrmEntity {
 
     @OneToMany(() => CandidateOrmEntity, (candidate) => candidate.user)
     candidates: CandidateOrmEntity[];
+
+    @OneToMany(() => JobPostingOrmEntity, (jobPosting) => jobPosting.user)
+    jobPostings: JobPostingOrmEntity[];
 }
