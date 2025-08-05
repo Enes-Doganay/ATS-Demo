@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe } from '@nestjs/common';
 import { FindAllUserUseCase } from '../../application/use-cases/find-all-user.use-case';
-import { privateDecrypt } from 'crypto';
 import { FindUserByIdUseCase } from '../../application/use-cases/find-user-by-id.use-case';
 import { CreateUserUseCase } from '../../application/use-cases/create-user.use-case';
 import { DeleteUserUseCase } from '../../application/use-cases/delete-user.use-case';

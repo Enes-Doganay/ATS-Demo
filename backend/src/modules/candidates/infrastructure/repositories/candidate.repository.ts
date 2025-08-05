@@ -9,10 +9,11 @@ import { CandidateOrmEntity } from "../entities/candidate-orm.entity";
 
 @Injectable()
 export class CandidateRepository extends BaseRepository<Candidate, CandidateOrmEntity> implements ICandidateRepository {
+    private readonly candidateFactory = new CandidateFactory();
+    
     constructor(
         @InjectRepository(CandidateOrmEntity)
         repository: Repository<CandidateOrmEntity>,
-        @Inject('ICandidateFactory') private readonly candidateFactory: CandidateFactory,
     ) {
         super(repository);
     }
