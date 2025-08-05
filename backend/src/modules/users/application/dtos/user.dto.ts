@@ -15,10 +15,6 @@ export class UserDto {
     @IsEmail()
     email: string;
 
-    @ApiProperty({ description: 'The password of the user', example: 'securepassword123' })
-    @IsString()
-    password: string;
-
     @ApiProperty({ description: 'The role of the user', example: 'admin'})
     @IsEnum(UserRole)
     role: UserRole;
