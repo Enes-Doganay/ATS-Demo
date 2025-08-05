@@ -1,14 +1,14 @@
 import { Inject } from "@nestjs/common";
 import { IUserRepository } from "../../domain/interfaces/user-repository.interface";
-import { UserFactory } from "../factories/user.factory";
 import { User } from "../../domain/entities/user.entity";
 import { UpdateUserDto } from "../dtos/update-user.dto";
 import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { IUserFactory } from "../../domain/interfaces/user-factory.interface";
 
 export class UpdateUserUseCase {
     constructor(
         @Inject('IUserRepository') private readonly userRepository: IUserRepository,
-        @Inject('IUserFactory') private readonly userFactory: UserFactory,
+        @Inject('IUserFactory') private readonly userFactory: IUserFactory,
     ) {}
 
   async execute(id: number, dto: UpdateUserDto): Promise<User> {
