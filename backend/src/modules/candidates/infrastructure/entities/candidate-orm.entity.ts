@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntity } from "../../../../shared/infrastructure/entities/base.entity";
 import { UserOrmEntity } from "src/modules/users/infrastructure/entities/user-orm-entity";
+import { ApplicationOrmEntity } from "src/modules/applications/infrastructure/entities/application-orm.entity";
 @Entity('candidates')
 export class CandidateOrmEntity extends BaseEntity {
     @Column( { name: 'user_id', type: 'int' })
@@ -24,4 +25,7 @@ export class CandidateOrmEntity extends BaseEntity {
     @ManyToOne(() => UserOrmEntity, (user) => user.candidates)
     @JoinColumn({ name: 'user_id' })
     user: UserOrmEntity;
+
+    @OneToMany(() => ApplicationOrmEntity, (application) => application.candidate)
+    applications: ApplicationOrmEntity[];
 }
