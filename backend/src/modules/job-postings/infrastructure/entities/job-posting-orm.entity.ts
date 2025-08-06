@@ -1,6 +1,7 @@
+import { ApplicationOrmEntity } from "src/modules/applications/infrastructure/entities/application-orm.entity";
 import { UserOrmEntity } from "src/modules/users/infrastructure/entities/user-orm-entity";
 import { BaseEntity } from "src/shared/infrastructure/entities/base.entity";
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 @Entity('job_postings')
 export class JobPostingOrmEntity extends BaseEntity {
@@ -19,4 +20,8 @@ export class JobPostingOrmEntity extends BaseEntity {
     @ManyToOne(() => UserOrmEntity, (user) => user.jobPostings)
     @JoinColumn({ name: 'posted_by' })
     user: UserOrmEntity;
+
+    @OneToMany(() => ApplicationOrmEntity, (application) => application.jobPosting)
+    applications: ApplicationOrmEntity[];
+
 }

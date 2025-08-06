@@ -9,6 +9,7 @@ import { getDatabaseConfig } from './config/database.config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { throttlerConfig } from './config/throttler.config';
 import { JobPostingsModule } from './modules/job-postings/job-postings.module';
+import { ApplicationsModule } from './modules/applications/applications.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { JobPostingsModule } from './modules/job-postings/job-postings.module';
     ThrottlerModule.forRootAsync(throttlerConfig),
     CandidatesModule,
     UsersModule,
-    JobPostingsModule],
+    JobPostingsModule,
+    ApplicationsModule],
   controllers: [AppController],
   providers: [
     AppService, 
