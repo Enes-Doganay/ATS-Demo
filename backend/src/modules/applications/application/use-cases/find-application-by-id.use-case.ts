@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { IApplicationRepository } from "../../domain/interfaces/application-repository.interface";
 import { Application } from "../../domain/entities/application.entity";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 
 export class FindApplicationByIdUseCase {
     constructor(

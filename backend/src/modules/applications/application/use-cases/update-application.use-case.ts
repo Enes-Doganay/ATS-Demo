@@ -3,7 +3,7 @@ import { IApplicationRepository } from "../../domain/interfaces/application-repo
 import { IApplicationFactory } from "../../domain/interfaces/application-factory.interface";
 import { UpdateApplicationDto } from "../dto/update-application.dto";
 import { Application } from "../../domain/entities/application.entity";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 
 export class UpdateApplicationUseCase {
     constructor(

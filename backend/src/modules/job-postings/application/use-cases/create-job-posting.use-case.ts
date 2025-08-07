@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { CreateJobPostingDto } from "../dto/create-job-posting.dto";
 import { JobPosting } from "../../domain/entities/job-posting.entity";
 import { IUserRepository } from "src/modules/users/domain/interfaces/user-repository.interface";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 import { IJobPostingRepository } from "../../domain/interfaces/job-posting-repository.interface";
 import { IJobPostingFactory } from "../../domain/interfaces/job-posting-factory.interface";
 

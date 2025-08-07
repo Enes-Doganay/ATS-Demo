@@ -21,5 +21,13 @@ export class UserRepository extends BaseRepository<User, UserOrmEntity> implemen
 
     protected getFactory() {
         return this.userFactory;
-    }    
+    }
+
+    async findByEmail(email: string): Promise<User | null> {
+        const entity = await this.repository.findOne({ where: { email } });
+
+        if (!entity) return null;
+
+        return this.userFactory.fromEntity(entity);
+    }
 }

@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { IUserRepository } from "../../domain/interfaces/user-repository.interface";
 import { User } from "../../domain/entities/user.entity";
 import { UpdateUserDto } from "../dtos/update-user.dto";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 import { IUserFactory } from "../../domain/interfaces/user-factory.interface";
 
 export class UpdateUserUseCase {
