@@ -1,16 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { FindAllUserUseCase } from '../../application/use-cases/find-all-user.use-case';
 import { FindUserByIdUseCase } from '../../application/use-cases/find-user-by-id.use-case';
 import { CreateUserUseCase } from '../../application/use-cases/create-user.use-case';
 import { DeleteUserUseCase } from '../../application/use-cases/delete-user.use-case';
 import { UpdateUserUseCase } from '../../application/use-cases/update-user.use-case';
 import { UserDto } from '../../application/dtos/user.dto';
-import { ApiNotFoundResponse, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../../application/dtos/create-user.dto';
 import { UpdateUserDto } from '../../application/dtos/update-user.dto';
 import { IUserFactory } from '../../domain/interfaces/user-factory.interface';
-
+import { JwtAuthGuard } from 'src/modules/auth/presentation/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/modules/auth/presentation/guards/roles.guard';
+import { UserRole } from '../../domain/enums/user-role.enum';
+import { Roles } from 'src/modules/auth/presentation/decorators/roles.decorator';
+@ApiTags('Users')
 @Controller('users')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
+@Roles(UserRole.ADMIN)
 export class UsersController {
   constructor(
     private readonly findAllUserUseCase: FindAllUserUseCase,
