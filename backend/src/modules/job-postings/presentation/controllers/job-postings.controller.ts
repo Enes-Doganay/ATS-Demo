@@ -1,15 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { CreateJobPostingDto } from '../../application/dto/create-job-posting.dto';
 import { UpdateJobPostingDto } from '../../application/dto/update-job-posting.dto';
 import { CreateJobPostingUseCase } from '../../application/use-cases/create-job-posting.use-case';
 import { UpdateJobPostingUseCase } from '../../application/use-cases/update-job-posting.use-case';
 import { FindJobPostingByIdUseCase } from '../../application/use-cases/find-job-posting-by-id.use-case';
 import { DeleteJobPostingUseCase } from '../../application/use-cases/delete-job-posting.use-case';
-import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JobPostingDto } from '../../application/dto/job-posting.dto';
 import { FindAllJobPostingUseCase } from '../../application/use-cases/find-all-job-posting.use-case';
 import { IJobPostingFactory } from '../../domain/interfaces/job-posting-factory.interface';
-
+import { JwtAuthGuard } from 'src/modules/auth/presentation/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/modules/auth/presentation/guards/roles.guard';
+import { UserRole } from 'src/modules/users/domain/enums/user-role.enum';
+import { Roles } from 'src/modules/auth/presentation/decorators/roles.decorator';
+@ApiTags('Job Postings')
 @Controller('job-postings')
 export class JobPostingsController {
   constructor(
@@ -26,6 +30,9 @@ export class JobPostingsController {
     description: 'Job Posting created successfully',
     type: JobPostingDto,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
   async create(@Body() createJobPostingDto: CreateJobPostingDto): Promise<JobPostingDto> {
     const jobPosting =  await this.createJobPostingUseCase.execute(createJobPostingDto);
     return this.jobPostingFactory.toDto(jobPosting);
@@ -55,6 +62,9 @@ export class JobPostingsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
   @ApiOkResponse({
     description: 'Job Posting updated successfully',
     type: JobPostingDto,
@@ -68,6 +78,9 @@ export class JobPostingsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
   @ApiOkResponse({
     description: 'Job Posting deleted successfully',
   })

@@ -45,8 +45,7 @@ export class AuthService implements IAuthService {
         const refreshToken = this.jwtService.generateRefreshToken(payload);
         
         const expiresAt = new Date();
-        const expiresIn = this.configService.get('JWT_EXPIRES_IN');
-
+        const expiresIn = parseInt(this.configService.get('JWT_EXPIRES_IN', '15'), 10);
         expiresAt.setMinutes(expiresAt.getMinutes() + expiresIn);
 
         const session = new AuthSession(

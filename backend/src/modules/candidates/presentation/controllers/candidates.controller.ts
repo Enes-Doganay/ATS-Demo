@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Inject, UseGuards } from '@nestjs/common';
 import { CreateCandidateDto } from '../../application/dto/create-candidate.dto';
 import { UpdateCandidateDto } from '../../application/dto/update-candidate.dto';
 import { CreateCandidateUseCase } from '../../application/use-cases/create-candidate.use-case';
@@ -7,9 +7,13 @@ import { FindCandidateByIdUseCase } from '../../application/use-cases/find-candi
 import { UpdateCandidateUseCase } from '../../application/use-cases/update-candidate.use-case';
 import { DeleteCandidateUseCase } from '../../application/use-cases/delete-candidate.use-case';
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator';
-import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CandidateDto } from '../../application/dto/candidate.dto';
 import { ICandidateFactory } from '../../domain/interfaces/candidate-factory.interface';
+import { JwtAuthGuard } from 'src/modules/auth/presentation/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/modules/auth/presentation/guards/roles.guard';
+import { Roles } from 'src/modules/auth/presentation/decorators/roles.decorator';
+import { UserRole } from 'src/modules/users/domain/enums/user-role.enum';
 
 @ApiTags('Candidates')
 @Controller('candidates')
@@ -34,6 +38,9 @@ export class CandidatesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN, UserRole.RECRUITER)
   @ApiOkResponse({
     description: 'All candidates retrieved successfully',
     type: CandidateDto
@@ -44,6 +51,9 @@ export class CandidatesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN, UserRole.RECRUITER)
   @ApiOkResponse({
     description: 'Candidate found successfully',
     type: CandidateDto
@@ -57,6 +67,9 @@ export class CandidatesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN, UserRole.RECRUITER)
   @ApiOkResponse({
     description: 'Candidate updated successfully',
     type: CandidateDto
@@ -69,6 +82,9 @@ export class CandidatesController {
     return this.candidateFactory.toDto(updatedCandidate);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN, UserRole.RECRUITER)
   @ApiOkResponse({
     description: 'Candidate deleted successfully',
   })
