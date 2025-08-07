@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { ICandidateRepository } from "../../domain/interfaces/candidate-repository.interface";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 import { Candidate } from "../../domain/entities/candidate.entity";
 
 @Injectable()

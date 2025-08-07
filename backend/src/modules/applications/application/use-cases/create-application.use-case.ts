@@ -5,7 +5,7 @@ import { ICandidateRepository } from "src/modules/candidates/domain/interfaces/c
 import { IJobPostingRepository } from "src/modules/job-postings/domain/interfaces/job-posting-repository.interface";
 import { Application } from "../../domain/entities/application.entity";
 import { CreateApplicationDto } from "../dto/create-application.dto";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 
 export class CreateApplicationUseCase {
     constructor(

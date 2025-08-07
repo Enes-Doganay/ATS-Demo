@@ -3,7 +3,7 @@ import { ICandidateRepository } from "../../domain/interfaces/candidate-reposito
 import { ICandidateFactory } from "../../domain/interfaces/candidate-factory.interface";
 import { CreateCandidateDto } from "../dto/create-candidate.dto";
 import { Candidate } from "../../domain/entities/candidate.entity";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 import { IUserRepository } from "src/modules/users/domain/interfaces/user-repository.interface";
 
 @Injectable()

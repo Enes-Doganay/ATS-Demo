@@ -73,7 +73,7 @@ export class UsersController {
     description: 'User deleted successfully',
   })
   @ApiNotFoundResponse({
-    description: 'Candidate not found',
+    description: 'User not found',
   })
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.deleteUserUseCase.execute(id);

@@ -1,5 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { EntityNotFoundError } from "src/shared/application/errors/entity-not-found.error";
+import { EntityNotFoundError } from "src/shared/domain/errors/entity-not-found.error";
 import { IJobPostingRepository } from "../../domain/interfaces/job-posting-repository.interface";
 
 export class DeleteJobPostingUseCase {

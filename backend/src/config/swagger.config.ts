@@ -5,7 +5,16 @@ export const swaggerConfig = () => {
         .setTitle('API Documentation')
         .setDescription('The API description')
         .setVersion('1.0')
-        .addBearerAuth()
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                name: 'JWT',
+                description: 'Enter JWT token',
+                in: 'header',
+            }
+        )
         .addTag('Candidates')
         .build()
 }

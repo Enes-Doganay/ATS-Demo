@@ -10,6 +10,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { throttlerConfig } from './config/throttler.config';
 import { JobPostingsModule } from './modules/job-postings/job-postings.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ApplicationsModule } from './modules/applications/applications.module';
     CandidatesModule,
     UsersModule,
     JobPostingsModule,
-    ApplicationsModule],
+    ApplicationsModule,
+    AuthModule],
   controllers: [AppController],
   providers: [
     AppService, 
